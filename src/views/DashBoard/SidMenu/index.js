@@ -3,7 +3,8 @@ import MenuArr from "../../../router/menu";
 
 import { withRouter } from "react-router";
 import { Layout, Menu } from "antd";
-
+import { connect } from "react-redux";
+import store from "../../redux";
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 class SideMenu extends Component {
@@ -42,6 +43,16 @@ class SideMenu extends Component {
       }
     });
   };
+
+  componentDidMount() {
+    // 订阅方法
+    store.subscribe(() => {
+      console.log("我是菜单那的 订阅", store.getState());
+      this.setState({
+        collapsed: store.getState().isCollapsed,
+      });
+    });
+  }
   render() {
     console.log(this.props); // 拿到此时路径
     let selectedKey = this.props.location.pathname;
@@ -59,24 +70,6 @@ class SideMenu extends Component {
           onClick={this.handleChangePage}
         >
           {this.renderMenu(MenuArr)}
-          {/* <Menu.Item key="/home" icon={<UserOutlined />}>
-            首页
-          </Menu.Item>
-          <SubMenu key="/user-manage" icon={<UserOutlined />} title="用户管理">
-            <Menu.Item key="/user-manage/users">用户列表</Menu.Item>
-          </SubMenu>
-          <SubMenu key="/right-manage" icon={<UserOutlined />} title="权限列表">
-            <Menu.Item key="/right-manage/roles">角色列表</Menu.Item>
-            <Menu.Item key="/right-manage/rights">权限列表</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="/article-manage"
-            icon={<UserOutlined />}
-            title="文章管理"
-          >
-            <Menu.Item key="/article-manage/list">文章列表</Menu.Item>
-            <Menu.Item key="/article-manage/category">文章分类</Menu.Item>
-          </SubMenu> */}
         </Menu>
       </Sider>
     );
@@ -87,4 +80,14 @@ class SideMenu extends Component {
     this.props.history.push(obj.key); //key路由对应的路径
   };
 }
-export default withRouter(SideMenu);
+
+// connect 拿到了 store.getState()
+const mapStateToProps = (state) => {
+  // state   这个是获取的状态   store.getState()
+  console.log(state);
+  return {
+    isCollapsed: state.isCollapsed,
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(SideMenu));

@@ -13,6 +13,8 @@ import Notfound from "../Notfound";
 import List from "../ActicleManage/List";
 import Category from "../ActicleManage/Category";
 import Create from "../ActicleManage/Create";
+import Preview from "../ActicleManage/Preview";
+import Updata from "../ActicleManage/Updata";
 import { Layout } from "antd";
 
 const {  Content } = Layout;
@@ -44,6 +46,8 @@ export default class DashBoard extends Component {
               <Route path="/acticle-manage" component={ActicleManage} />
               <Route path="/article-manage/list" component={List} />
               <Route path="/article-manage/Create" component={Create} />
+              <Route path="/article-manage/Preview/:id" component={Preview} />
+              <Route path="/article-manage/Updata/:id" component={Updata} />
               <Route path="/article-manage/category" component={Category} />
 
               <Redirect from="/" to="/home" exact />

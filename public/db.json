@@ -18,68 +18,74 @@
       "id": 2
     }
   ],
-   "roles": [{
-       "id": 1,
-       "roleName": "超级管理员",
-       "roleRight": [{
-           "category": "文章管理",
-           "list": [
-             "文章列表",
-             "创建文章",
-             "文章预览",
-             "文章分类"
-           ]
-         },
-         {
-           "category": "用户管理",
-           "list": [
-             "用户列表",
-             "添加用户",
-             "删除用户",
-             "修改用户"
-           ]
-         },
-         {
-           "category": "权限管理",
-           "list": [
-             "角色列表",
-             "权限列表",
-             "添加角色",
-             "修改角色",
-             "删除角色"
-           ]
-         }
-       ],
-       "default": true
-     },
-     {
-       "id": 2,
-       "roleName": "管理员",
-       "roleRight": [{
-         "category": "文章管理",
-         "list": [
-           "文章列表",
-           "创建文章",
-           "文章预览",
-           "文章分类"
-         ]
-       }],
-       "default": true
-     },
-     {
-       "id": 3,
-       "roleName": "小编",
-       "roleRight": [{
-         "category": "文章管理",
-         "list": [
-           "文章列表",
-           "创建文章",
-           "文章预览"
-         ]
-       }],
-       "default": true
-     }
-   ],
+  "roles": [
+    {
+      "id": 1,
+      "roleName": "超级管理员",
+      "roleRight": [
+        {
+          "category": "文章管理",
+          "list": [
+            "文章列表",
+            "创建文章",
+            "文章预览",
+            "文章分类"
+          ]
+        },
+        {
+          "category": "用户管理",
+          "list": [
+            "用户列表",
+            "添加用户",
+            "删除用户",
+            "修改用户"
+          ]
+        },
+        {
+          "category": "权限管理",
+          "list": [
+            "角色列表",
+            "权限列表",
+            "添加角色",
+            "修改角色",
+            "删除角色"
+          ]
+        }
+      ],
+      "default": true
+    },
+    {
+      "id": 2,
+      "roleName": "管理员",
+      "roleRight": [
+        {
+          "category": "文章管理",
+          "list": [
+            "文章列表",
+            "创建文章",
+            "文章预览",
+            "文章分类"
+          ]
+        }
+      ],
+      "default": true
+    },
+    {
+      "id": 3,
+      "roleName": "小编",
+      "roleRight": [
+        {
+          "category": "文章管理",
+          "list": [
+            "文章列表",
+            "创建文章",
+            "文章预览"
+          ]
+        }
+      ],
+      "default": true
+    }
+  ],
   "rights": [
     {
       "id": 1,
@@ -175,14 +181,24 @@
   ],
   "articles": [
     {
-      "id": 1,
-      "title": "1111111",
-      "content": "1-conent",
-      "author": "admin",
+      "title": "111",
       "category": [
         "娱乐",
         "星座"
-      ]
+      ],
+      "content": "<p>绕弯儿翁二</p>\n",
+      "author": "admin",
+      "id": 1
+    },
+    {
+      "title": "321312312",
+      "category": [
+        "IT",
+        "Java"
+      ],
+      "content": "<p>312312312</p>\n",
+      "author": "admin",
+      "id": 2
     }
   ],
   "categories": [

@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less' //antd样式文件
 import App from './App';
+
+
 // import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <App />,
+
+   <App />,
+
 document.getElementById('root')
 );
 
