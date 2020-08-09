@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import {
   PageHeader,
-  Button
-  ,message,
+  Button,
+  message,
   Steps,
   Form,
   Input,

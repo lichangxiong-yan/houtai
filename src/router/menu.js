@@ -3,6 +3,10 @@ import {
   CopyOutlined,
   ScissorOutlined,
   DeleteOutlined,
+  BulbOutlined,
+  MessageOutlined,
+  ProfileOutlined,
+  ClusterOutlined,
 } from "@ant-design/icons";
 
 const MenuArr = [
@@ -62,6 +66,32 @@ const MenuArr = [
         title: "文章分类",
         icon: DeleteOutlined,
         path: "/article-manage/category",
+        permission: 2,
+      },
+    ],
+  },
+  {
+    title: "作品集",
+    icon: BulbOutlined,
+    path: "/collection",
+    permission: 1,
+  },
+  {
+    title: "留言板",
+    icon: MessageOutlined,
+    path: "/MessageBoard",
+    permission: 1,
+    children: [
+      {
+        title: "留言列表",
+        icon: ProfileOutlined,
+        path: "/messageBoard/list",
+        permission: 1,
+      },
+      {
+        title: "留言管理",
+        icon: ClusterOutlined,
+        path: "/messageBoard/management",
         permission: 2,
       },
     ],

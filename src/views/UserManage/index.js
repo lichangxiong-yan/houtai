@@ -1,17 +1,18 @@
 import React, { Component } from "react";
-import { Button, Table, Switch, Select, Input, Form, Modal } from "antd";
+import { Button, Table, Switch, Select, Input, Form, Modal,message } from "antd";
 
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 import axios from "axios";
 const { Option } = Select;
 
+const { TextArea } = Input;
 export default class index extends Component {
   state = {
     datalist: [],
-    isShow: false, // 模态框默认不显示
-    isUpdate: false, // 更新模态框默认不显示
-    currentId: 0,
+    isShow: false,   // 添加用户     模态框默认不显示
+    isUpdate: false, // 更新 编辑 模态框默认不显示
+    currentId: 0,  // 给个id  为了后面的更新使用
   };
 
   columns = [
@@ -95,7 +96,7 @@ export default class index extends Component {
           pagination={{ pageSize: 5 }}
         />
 
-        {/*  创建弹出层 */}
+        {/*  创建新增弹出层 */}
         <Modal
           visible={this.state.isShow}
           title="添加用户"
@@ -183,7 +184,12 @@ export default class index extends Component {
                 },
               ]}
             >
-              <Input />
+              {/* 这里面不仅仅是可以input哦 */}
+             <TextArea
+              // row={4}
+              // value={detail.desc}
+              // onChange={this.change.bind(this, "desc")}
+            />
             </Form.Item>
             <Form.Item
               name="password"
@@ -218,6 +224,29 @@ export default class index extends Component {
       </div>
     );
   }
+  // 状态开关或关闭
+  handlSwitch = (item) => {
+    console.log(item);
+    let {roleState} = item
+    // 同步后端
+    this.state.datalist.forEach((listitem) => {
+      if (listitem.id === item.id) {
+        listitem["roleState"] = !roleState
+
+        axios
+          .put(`http://localhost:5000/users/${item.id}`, {
+            ...listitem, // 把最新的数据传过去
+          })
+          .then((res) => {
+            console.log("update-ok" , res);
+          })
+          .catch((error) => {
+            console.log("请求数据", error);
+          });
+      }
+    });
+  };
+
   // 点击添加
   handleClick = () => {
     console.log(this.refs.form);
@@ -278,7 +307,7 @@ export default class index extends Component {
     });
   };
 
-  // 更新那个模态框的方法
+  // 更新(编辑) 那个模态框的方法
   handleUpdate = (item) => {
     // console.log(item)
 
@@ -286,7 +315,7 @@ export default class index extends Component {
     setTimeout(() => {
       this.setState({
         isUpdate: true, // 模态框显示
-        currentId: item.id, //id 记录此时要更新哪个user
+        currentId: item.id, //id 记录此时要更新哪个user  给下面做更新用  更新需要  id
       });
       // 预设数据
       // setFieldsValue 给表单元素提前设置数据
@@ -305,7 +334,11 @@ export default class index extends Component {
       .validateFields()
       .then((values) => {
         console.log(values);
-        this.updateTable(values); // 调用
+      
+        setTimeout(() => {
+          this.updateTable(values); // 调用 更新数据  values 这是更改之后的数据
+          message.info('更新成功了哦');
+        },0)
       })
       .catch((err) => {
         console.log(err);
@@ -313,10 +346,11 @@ export default class index extends Component {
   };
   // 更新  更新表格方法
   updateTable = (values) => {
-    // 这个是老的状态  就是过滤当前正在点的那个id 项  这个过滤出来的是个数组
+    // 这个是老的状态  就是过滤当前正在点的那个id 项  这个过滤出来的是个数组所以要用[0]
     let oldItems = this.state.datalist.filter(
       (item) => item.id === this.state.currentId
     );
+    console.log('12312',oldItems[0])  // 就是那一条数据  点击的那一条数据
     let roleArr = ["小编", "管理员", "超级管理员"];
     // console.log(oldItems)  // 是个数组格式
     // 更新  这里的更新是让后端更新    更新必须要有id
@@ -342,24 +376,5 @@ export default class index extends Component {
           datalist: newlist, // 更新后的数据赋值
         });
       });
-  };
-
-  // 状态开关或关闭
-  handlSwitch = (item) => {
-    console.log(item);
-    // 同步后端
-    this.state.datalist.forEach((listitem) => {
-      if (listitem.id === item.id) {
-        listitem["roleState"] = !listitem["roleState"];
-
-        axios
-          .put(`http://localhost:5000/users/${item.id}`, {
-            ...listitem, // 把最新的数据传过去
-          })
-          .then((res) => {
-            console.log("update-ok");
-          });
-      }
-    });
   };
 }

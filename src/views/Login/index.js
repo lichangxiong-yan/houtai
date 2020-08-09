@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Particles from "react-particles-js";
 
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Spin } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import axios from 'axios'
@@ -9,6 +9,9 @@ import axios from 'axios'
 import style from "./login.module.css";
 
 export default class Login extends Component {
+  state = {
+    loading: false
+  }
   render() {
 
     return (
@@ -57,8 +60,9 @@ export default class Login extends Component {
                 htmlType="submit"
                 className="login-form-button"
               >
-                Log in
+                登入
               </Button>
+              <Spin spinning={this.state.loading} />
             </Form.Item>
           </Form>
         </div>
@@ -66,12 +70,21 @@ export default class Login extends Component {
     );
   }
   onFinish = (values) => {
+    this.setState({
+      loading: true
+    })
     console.log("提交后端校验: ", values);
 
     axios.get(`http://localhost:5000/users?username=${values.username}&password=${values.password}&roleState=${true}`).then(res => {
       if(res.data.length === 0){
         message.error("用户名密码不匹配");
+        this.setState({
+          loading:false
+        })
       }else{
+          this.setState({
+            loading: false,
+          });
              // localstorage 只能存字符串， json字符串转化
              localStorage.setItem("token", JSON.stringify(res.data[0]));
              this.props.history.push(`/home`); //跳转到首页

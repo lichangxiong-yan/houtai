@@ -13,11 +13,12 @@ class SideMenu extends Component {
   };
   // 自己封装渲染函数
   renderMenu = (menus) => {
-    // let { roleTyoe } = JSON.parse(localStorage.getItem("token"));
+    let { roleType } = JSON.parse(localStorage.getItem("token"));
     // roleType 当前登录用户的 roleType
     return menus.map((item) => {
       //提示：判断当前登录的用户的角色值（roleType），跟当前要渲染的侧边栏项需要的角色值进行对比
-      if (item.children) {
+      // 就是当前用户的  那个权限值 要大于等于当前的这个类别的等级 才会显示
+      if (item.children && roleType >= item.permission) {
         return (
           <SubMenu
             key={item.path}
@@ -35,6 +36,10 @@ class SideMenu extends Component {
           </SubMenu>
         );
       } else {
+        // 如果 当前这个类别的等级大于 用户的权限值 就不显示 返回 null
+        if (item.permission > roleType) {
+          return null;
+        }
         return (
           <Menu.Item key={item.path} icon={<item.icon />}>
             {item.title}
